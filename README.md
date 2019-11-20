@@ -1,6 +1,6 @@
 # This machine learning API will receive data from users and make prediction on: 
-#(A) Wart treatment success by Cryotherapy and Immunotherapy methods 
-#(B) Early diagnosis of breast cancer
+# (A) Wart treatment success by Cryotherapy and Immunotherapy methods 
+# (B) Early diagnosis of breast cancer
 
 Wart treatment success prediction: Cryotherapy and Immunotherapy are two common treatment methods for warts. The treatment success may vary patient to patient. This application will feed the user input data into a trained machine learning model and predict the probability of treatment success for the above two treatment methods for better decision making.
 

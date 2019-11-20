@@ -1,4 +1,5 @@
 This machine learning API will receive data from users and make prediction on: 
+
 (A) Wart treatment success by Cryotherapy and Immunotherapy methods 
 (B) Early diagnosis of breast cancer
 

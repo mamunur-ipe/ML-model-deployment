@@ -84,7 +84,7 @@ def result_wart():
         
     return render_template("result_wart.html", user_input = user_input, result = output_text)
 
-
+## Breast Cancer
 @app.route('/result_breast_cancer', methods = ['POST'])
 def result_breast_cancer():
     user_input = request.form
@@ -123,6 +123,6 @@ def result_breast_cancer():
 
 
 if __name__ == '__main__':
-   app.run(debug = True)
+   app.run()
 
 

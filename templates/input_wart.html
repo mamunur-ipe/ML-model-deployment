@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title> Wart input </title>
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+        {% extends "header.html" %}
+        {% block content %}
+                
+        
+       <h4 id="center">
+       Cryotherapy and Immunotherapy are two common treatment methods for warts. The 
+       treatment success usually vary patient to patient. This application will predict 
+       the probability of treatment success for the above two treatment methods.
+       </h4>
+       
+     
+    <form id="box_center" action="{{ url_for('result_wart') }}" method = "POST" >
+      
+      <h2 id="font25_bold"> Please provide the below information </h2>
+      
+      
+         <p id="font22_bold">Patient's age (in years): <br>
+         <input type = "text" name = "age" placeholder="values between 15 to 100" required="required" /></p>
+      
+         <p id="font22_bold">Approximately how long is the patient suffering from this disease (in months)?<br>
+         <input type = "text" name = "time" placeholder="values between 0 to 24" required="required" /></p>
+         
+         
+         <p id="font22_bold">What type of warts is the patient suffering from?
+            Insert 1, 2 or 3 as shown below. If you are unsure, please check further 
+            descriptions of different types of warts at the end of this page. <br>
+        
+                1 - Common type<br>
+                2 - Plantar type<br>
+                3 - Both common and plantar types<br>
+
+         <input type = "text" name = "type" placeholder="insert 1, 2 or 3" required="required" /></p>
+         
+         <p id="font22_bold">Approximate area of the largest wart (in square milimeters): <br>
+         <input type ="text" name = "area" placeholder="values between 1 to 1000" required="required" /></p>
+         
+         <button type = "submit" class="btn btn:hover" > Submit </button>
+     </form>
+      
+      <br>
+
+<div id="box_left">
+
+      <h2> *Wart Types: </h2>
+      <ul>
+          <li> <b>Common warts: </b>           
+          This type of warts usually grow on your fingers and toes, but can 
+          appear elsewhere. They have a rough, grainy appearance and a rounded top. Common 
+          warts are grayer than the surrounding skin. </li>
+          <br>		  
+		  <img title="Common wart" src="static/images/common_wart1.jpg" alt="Picture of common wart" style="width:300px;height:200px;">
+          
+          <br>
+          <br>
+          
+          <li> <b>Plantar warts: </b>           
+          This type of warts grow on the soles of the feet. Unlike other 
+          warts, plantar warts grow into your skin, not out of it. You can tell if you have a 
+          plantar wart if you notice what appears to be a small hole in the bottom of your 
+          foot that is surrounded by hardened skin. Plantar warts can make walking uncomfortable. </li>
+          <br>		  
+		  <img id="center" title="Plantar wart" src="static/images/plantar_wart1.jpg" alt="Picture of plantar wart" style="width:300px;height:150px;">
+		  
+      </ul>
+      
+            <p style="font-size: 12px;"> 
+              *Source: https://www.healthline.com/health/skin/warts
+        	  <br>
+        	  Common wart image: http://medwarts.com  
+        	  <br>
+        	  Plantar wart image: https://www.txfootankle.com
+        	    
+        	</p>
+
+</div>
+</body>
+   
+       {% endblock %}  
+</html>

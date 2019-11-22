@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+<title> Wart treatment prediction </title>
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static', filename='css/style.css') }}">
+
+<body>
+
+    {% extends "header.html" %}
+    {% block content %}
+    
+    <br>
+
+<div id="box_center">
+   <h2> Provided information </h2>
+
+       Elapsed time: {{ user_input["time"] }} months<br>
+       Patient's age: {{ user_input["age"] }} years<br>
+       
+       {% if  user_input["type"]== '1'  %}
+          Wart type: Common <br>
+       {% elif  user_input["type"]== '2'  %}
+          Wart type: Plantar <br>
+       {% elif  user_input["type"]== '3'  %}
+          Wart type: Both plantar and common <br>
+       {% endif %}
+       
+       Area of the largest wart: {{ user_input["area"] }} sq. mm
+       
+       <br>
+       <br>
+
+</div>  
+   
+ 
+   <br>
+
+<div id="box_center">   
+ 
+   <h2> Prediction </h2>
+   <p style="font-size: 20px;font-weight:bold;"> {{ result }} </p>
+
+</div>
+
+
+<div style="font-size: 20px;font-weight:bold;text-align:center;">  
+
+   <h4> Thank you for using this application!!! </h4>
+
+    <a href="{{ url_for('input_wart') }}"> Predict for another person </a>
+   
+</div>   
+
+</body>
+
+   {% endblock %} 
+   
+</html>

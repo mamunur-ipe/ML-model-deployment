@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title> Machine Learning API </title>
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+        {% extends "header.html" %}
+        {% block content %}
+        
+       <br>
+
+<div id="box_center">
+       
+       <h2 id="center">
+       The below applications will feed the user input data into trained machine learning 
+       models and assist the user in making a better decision
+       </h2>
+       
+      <h2 id="blue_container"> Please Select an App </h2>
+      <br>
+          
+        <a id="fill_brick" href="{{ url_for('input_wart') }}">  Wart treatment decision support tool</a>
+        <br>
+        <br>
+        <a id="fill_brick" href="{{ url_for('input_breast_cancer') }}"> Breast cancer early detection tool</a>
+        
+        <br>
+        <br>
+</div>
+
+<br>
+
+
+<div id="box_left">         
+
+      <h2> Project Publications </h2>
+      
+      <ul>
+        
+        <li id="font15"> Rahman, M. M., Zhou, Y., Wang, S., & Rogers, J. Wart Treatment Decision Support 
+        Using Support Vector Machines. International Journal of Intelligent Systems and 
+        Applications. <em>(Accepted, In press)</em> </li>
+        
+                
+        <li id="font15"> Rahman, M. M., Wang, S., Zhou, Y., & Rogers, J. (2019). Predicting the Performance 
+        of Cryotherapy for Wart Treatment Using Machine Learning Algorithms. In <em>IISE 
+        Annual Conference</em>. Orlando, FL: The Institute of Industrial and Systems Engineers.</li>
+
+        
+        <li id="font15"> Rahman, M. M., Ghasemi, Y., Suley, E., Zhou, Y., Wang, S., & Rogers, J. 
+        Machine Learning Based Computer Aided Diagnosis of Breast Cancer Utilizing 
+        Anthropometric and Clinical Features. <em>(Under Review)</em> </li>
+       
+       </ul> 
+
+</div>
+
+        To learn more regarding the development of the machine learning 
+        models, please check the above articles.
+
+
+</body>
+   
+    {% endblock %}    
+    
+</html>
+

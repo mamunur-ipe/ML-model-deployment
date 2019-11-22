@@ -1,0 +1,139 @@
+<!doctype html>
+<html>
+<title> About Me </title>
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static', filename='css/style.css') }}">
+
+<body>
+
+    {% extends "header.html" %}
+    {% block content %}
+    
+<br>
+
+<div id="box_left">
+
+    <h4 id="center">        
+    I am a data science enthusiast and love to extract useful information from structured 
+    and unstructured raw data for business intelligence. I believe in Continuous Learning, 
+    Self Coaching, Self Motivation, and Teamwork.</h4>   
+ 
+    <h3>Career Summary </h3>
+    <ul>
+        <li> 4+ years of R&D experience in Data Science and Analytics, Statistical Modeling, Simulation and Optimization </li>
+        <li> 1 year shop-floor experience in a world-class manufacturing company </li>
+        <li> 1 year supply chain and logistics experience in a fortune 500 company </li>
+        <li> 3+ years experience of teaching (undergraduate engineering students) </li>
+    </ul>
+    
+    <h3>Computer Skills </h3>
+    <ul>
+        <li> Programming language: Python, MATLAB </li>
+        <li> Optimization: IBM OPL, Cplex </li>
+        <li> Simulation: AnyLogic, Witness </li>
+        <li> CAD Software: AutoCAD (2D & 3D), Solid Works, CATIA </li>
+        <li> Others: MS Excel, MS Access </li>
+    </ul>
+    
+    <h3>Data Science Libraries </h3>
+    <ul>
+        <li> Scikit-learn </li>
+        <li> SciPy </li>
+        <li> NumPy </li>
+        <li> Pandas </li>
+        <li> Keras </li>
+        <li> TensorFlow </li>
+        <li> <b>Data visualization:</b> Matplotlib, Plotly </li>
+        <li> <b>Web scrapping: </b> Beautiful Soup </li>
+        <li> <b>Web development: </b> Flask </li>
+        <li> <b>Database: </b> MySQL, PostgreSQL </li>
+        <li> <b>Dynamic dashboard:</b> Tableau, MS Excel </li>
+    </ul>
+    
+    <h3>Graduate Level Courses </h3>
+    <ul>
+        <li> Data Mining and Analytics </li>
+        <li> Deep Learning A-Z™: Hands-On Artificial Neural Network (online course) </li>
+        <li> Applied Regression Analysis </li>
+        <li> Stochastic Processes </li>
+        <li> Decision Analysis </li>
+        <li> Discrete Event Simulation and Optimization </li>
+        <li> Agent Based Simulation </li>
+        <li> Design of Experiments and Response Surface Methodology  </li>
+        <li> Statistical Quality Control </li>
+    </ul>
+    
+    <h3>Education </h3>
+    <ul>
+        <li> <b>PhD:</b> Industrial Engineering, The University of Texas at Arlington, TX, USA. (Graduation: Spring 2020) </li>
+        <li> <b>MS and BS:</b> Industrial and Manufacturing Engineering, BUET, Dhaka, Bangladesh (Graduation: 2015, 2011) </li>
+    </ul>
+    
+    <h3>PhD Dissertation </h3> 
+        <ul>   
+            <li>Comparative Analysis of Well-To-Wheel CO2 Emission of Gasoline and Electric Vehicles: An Agent-Based Simulation Approach </li>
+        </ul>
+    
+        <h3>Work Experiences </h3>
+            <ul>
+                <li> <b>The University of Texas at Arlington </b> (Fall 2015 &ndash; Spring 2020):</li>
+                    <ul>
+                      <li>Research Associate</li>
+                      <li>Teaching Associate</li>
+                    </ul>
+                <li> <b>Vistra Energy </b>, TX, USA (May 2018&nbsp;&ndash;&nbsp;Aug 2018)</li>
+                    <ul>
+                    	<li>Advanced Monitoring and Diagnostics Engineer (Internship)</li>
+                    </ul>
+                <li> <b> Ahsanullah University of Science echnology </b>, Dhaka, Bangladesh (2012-2015)</li>
+                    <ul>
+                    	<li>Lecturer, Department of the Mechanical and Production Engineering</li>
+                    </ul>
+                <li> <b>Unilever Bangladesh </b> (2011-2012)</li>
+                    <ul>
+                    	<li>Production Shift Officer</li>
+                    </ul>
+                <li> <b>Avery Dennison Bangladesh </b> (2011)</li>
+                    <ul>
+                    	<li>Global Leadership Development Associate</li>
+                    </ul>
+            </ul>
+            
+        <h3>Extra-Curricular Activities</h3>
+              <ul>
+                <li>Treasurer, Bangladesh Student Organization (BSO), UTA, 2017-2018</li>
+                <li>Press and Public Relation Secretary, BSO, UTA, 2016-2017</li>
+                <li>Office secretary, AIPE: Association of Industrial and Production Engineers, (2010 to 2011)</li>
+                <li>Badminton, Cricket, Soccer</li>
+              </ul>
+
+
+        <h3>Awards</h3>
+          <b>Best Paper Award in IISE 2019 Conference</b>
+            <ul>
+              <li>Rahman, M. M., Zhou, Y., &amp; Rogers, J. (2019). Performance Evaluation of Median U-Turn Intersection for Alleviating Traffic Congestion: An Agent-Based Simulation Study. In <em>IISE Annual Conference</em>. Orlando, FL: The Institute of Industrial and Systems Engineers (IISE).</li>
+            </ul>
+          <b>Best Paper Finalist in CSS 2018 Conference</b>
+            <ul>
+              <li>Rahman, M. M., Jahan, J., &amp; Zhou, Y. (2018). Alleviating Traffic Congestion by the Strategy of Modal Shift from Private Cars to Public Transports: A Case of Dhaka City, Bangladesh. In <em>CSS Annual Conference</em>. Santa Fe, NM: The Computational Social Science Society of the Americas (CSS).</li>
+            </ul>
+          <b>Other Publications</b>
+            <ul>
+                <li>Rahman, M. M., Zhou, Y., Wang, S., &amp; Rogers, J. Wart Treatment Decision Support Using Support Vector Machines. International Journal of Intelligent Systems and Applications. (Accepted, In press)</li>
+                <li>Rahman, M. M., Wang, S., Zhou, Y., &amp; Rogers, J. (2019). Predicting the Performance of Cryotherapy for Wart Treatment Using Machine Learning Algorithms. In <em>IISE Annual Conference</em>. Orlando, FL: The Institute of Industrial and Systems Engineers.</li>
+                <li>Rahman, M. M., Ghasemi, Y., Suley, E., Zhou, Y., Wang, S., &amp; Rogers, J. Machine Learning Based Computer Aided Diagnosis of Breast Cancer Utilizing Anthropometric and Clinical Features. (Under Review)</li>
+            </ul>
+
+
+</div>
+          <br>
+
+    <div style="text-align:center;"> 
+                
+        <a href="{{ url_for('home') }}"> Go Back to Home </a>
+     </div>
+
+</body>
+
+    {% endblock %} 
+    
+</html>

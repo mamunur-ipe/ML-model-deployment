@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<title> Breast cancer prediction </title>
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static', filename='css/style.css') }}">
+   
+<body>
+
+    {% extends "header.html" %}
+    {% block content %}
+    
+    <br>
+
+<div id="box_center">
+
+   <h2> Provided information </h2>
+   
+       Age: {{ user_input["age"] }} years<br>
+       BMI: {{ user_input["bmi"] }} <br>
+       Glucose: {{ user_input["glucose"] }} <br>
+       Insulin: {{ user_input["insulin"] }} <br>
+       Resistin: {{ user_input["resistin"] }} <br>
+       MCP-1: {{ user_input["mcp_1"] }} 
+       <br>
+       <br>
+</div>
+
+ <br>
+
+<div id="box_center">   
+ 
+   <h2> Prediction </h2>
+   <p style="font-size: 20px;font-weight:bold;"> {{ result }} </p>
+
+</div>
+   
+   <br>
+<div style="font-size: 20px;font-weight:bold;text-align:center;">
+   <h4> I know you can do it!! </h4>
+   
+    <a href="{{ url_for('input_breast_cancer') }}"> Try Again </a>
+   
+</div>
+
+</body>
+
+   {% endblock %} 
+   
+</html>

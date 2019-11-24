@@ -14,7 +14,16 @@
         Mamunur Rahman </p>
             
             <a href="{{ url_for('home') }}">Home </a>
-            <a href="{{ url_for('upcoming_projects') }}"> Upcoming Projects </a>
+            
+            <div class="dropdown">
+                  <button class="dropbtn"> Apps </button>
+                  <div class="dropdown-content">
+                      <a href="{{ url_for('input_breast_cancer') }}">Breast Cancer Early Detection Tool</a>
+                      <a href="{{ url_for('input_wart') }}">Wart Treatment Decision Support Tool</a>
+                  </div>
+            </div>
+            
+            <a href="{{ url_for('upcoming_projects') }}"> Upcoming Apps </a>
             <a href="{{ url_for('about_me') }}"> About Me </a>
             <a href="https://github.com/mamunur-ipe" target="_blank"> GitHub </a>
             <a href="https://www.linkedin.com/in/mamunur-rahman-9b5a7baa/" target="_blank"> LinkedIn </a>

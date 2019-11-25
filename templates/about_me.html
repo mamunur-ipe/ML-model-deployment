@@ -5,12 +5,16 @@
 
 <body>
 
+    <!-- Back to top -->
+    <a name="top"></a>
+
     {% extends "header.html" %}
     {% block content %}
     
 <br>
 
 <div id="box_left">
+
 
     <h4 id="center">        
     I am a data science enthusiast and love to extract useful information from structured 
@@ -49,17 +53,27 @@
         <li> <b>Dynamic dashboard:</b> Tableau, MS Excel </li>
     </ul>
     
-    <h3>Graduate Level Courses </h3>
+    <h3>Data Science Related Courses </h3>
     <ul>
         <li> Data Mining and Analytics </li>
         <li> Deep Learning A-Z™: Hands-On Artificial Neural Network (online course) </li>
         <li> Applied Regression Analysis </li>
         <li> Stochastic Processes </li>
         <li> Decision Analysis </li>
+    </ul>
+    
+    
+    <b >Other Courses</b>
+    <ul>
         <li> Discrete Event Simulation and Optimization </li>
         <li> Agent Based Simulation </li>
         <li> Design of Experiments and Response Surface Methodology  </li>
         <li> Statistical Quality Control </li>
+        <li> Production and Inventory Control </li>
+        <li>Facilities Planning and Design </li>
+        <li>Logistics and Transportation System Design </li>
+        <li>Requirements Engineering</li>
+
     </ul>
     
     <h3>Education </h3>
@@ -77,22 +91,44 @@
             <ul>
                 <li> <b>The University of Texas at Arlington </b> (Fall 2015 &ndash; Spring 2020):</li>
                     <ul>
-                      <li>Research Associate</li>
+                      <li >Research Associate</li>
+                          <ul style="list-style-type: none;">
+                              <li> Core Competencies </li>
+                          
+                                    <ul>
+                                        <li>Data Science and Machine Learning</li>
+                                        <li>Statistical Modeling</li>
+                                        <li>Simulation (Discrete Event, Agent-Based)</li>
+                                        <li>Optimization</li>
+                                        <li>Lean Six Sigma</li>
+                                     </ul>
+                          </ul>
+                     
                       <li>Teaching Associate</li>
-                    </ul>
-                <li> <b>Vistra Energy </b>, TX, USA (May 2018&nbsp;&ndash;&nbsp;Aug 2018)</li>
+                            <ul>
+                                <li>Engineering Project Management</li>
+                                <li>Facilities planning and Layout</li>                                
+                            </ul>
+              
+                     </ul>
+                    <li> <b>Vistra Energy</b>, TX, USA (May 2018&nbsp;&ndash;&nbsp;Aug 2018)</li>
                     <ul>
                     	<li>Advanced Monitoring and Diagnostics Engineer (Internship)</li>
+                        	<ul style="list-style-type: circle;">
+                              <li>Worked with the Power Optimization Team to set up and deploy advanced monitoring and diagnostics services to the power generation plants.</li>
+                              <li>Applied Machine Learning models utilizing prior running history to identify anomaly and undesirable operating conditions for preventive maintenance of the critical equipment of power plants.</li>
+                              <li>Developed Graphical User Interfaces of critical assets utilized in power generation using industry-leading software solutions.</li>
+                            </ul>
                     </ul>
-                <li> <b> Ahsanullah University of Science echnology </b>, Dhaka, Bangladesh (2012-2015)</li>
+                <li> <b> Ahsanullah University of Science echnology</b>, Dhaka, Bangladesh (2012-2015)</li>
                     <ul>
                     	<li>Lecturer, Department of the Mechanical and Production Engineering</li>
                     </ul>
-                <li> <b>Unilever Bangladesh </b> (2011-2012)</li>
+                <li> <b>Unilever Bangladesh</b> (2011-2012)</li>
                     <ul>
                     	<li>Production Shift Officer</li>
                     </ul>
-                <li> <b>Avery Dennison Bangladesh </b> (2011)</li>
+                <li> <b>Avery Dennison Bangladesh</b> (2011)</li>
                     <ul>
                     	<li>Global Leadership Development Associate</li>
                     </ul>
@@ -130,6 +166,7 @@
     <div style="text-align:center;"> 
                 
         <a href="{{ url_for('home') }}"> Go Back to Home </a>
+        <a href="#top">Go Back to Top</a>
      </div>
 
 </body>

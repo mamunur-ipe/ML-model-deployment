@@ -41,9 +41,9 @@ def result_wart():
         area = float(user_input['area'])
         
         ## check the input values whether is it within the recommended range
-        if age<15 or age>100 or time<0 or time>24 or type_<1 or type_>3 or area<1 or area>1000:
+        if age<15 or age>100 or time<0 or time>24 or area<1 or area>1000:
             output_text = "Please insert values within the recommended range, \
-                            otherwise the prediction will not be reliable"
+                            otherwise the prediction would not be reliable"
         
             return render_template("input_error_wart.html", user_input = user_input, result = output_text)
         
@@ -99,13 +99,10 @@ def result_wart():
     ## the user input is not numeric
     except:
         user_input = request.form
-        if user_input['type']=='1' or user_input['type']=='2' or user_input['type']=='3':
-            output_text = "Please insert only numeric values"
-            return render_template("input_error_wart.html", user_input = user_input, result = output_text)
-        else:
-            output_text = "As wart type, insert 1, 2 or 3 only"
-            return render_template("input_error_wart.html", user_input = user_input, result = output_text)
+        output_text = "Please insert only numeric values"
         
+        return render_template("input_error_wart.html", user_input = user_input, result = output_text)
+                
 
 
 @app.route('/result_breast_cancer', methods = ['POST'])
@@ -176,7 +173,7 @@ def result_breast_cancer():
 
 
 if __name__ == '__main__':
-   app.run(debug = True)
+   app.run()
 
 
 

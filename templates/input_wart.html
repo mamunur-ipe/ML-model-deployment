@@ -2,14 +2,15 @@
 <html>
 <head>
 <title> Wart input </title>
-<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static', filename='css/style.css') }}">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static', filename='css/style.css') }}">
+   
 </head>
 <body>
 
         {% extends "header.html" %}
         {% block content %}
-                
-        
+
+                      
        <h4 id="box_center">
        Cryotherapy and Immunotherapy are two common treatment methods for warts. The 
        treatment success usually vary patient to patient. This application will predict 
@@ -30,6 +31,8 @@
          
          
          <p id="font22_bold">What type of warts is the patient suffering from?
+         
+         <!--
             Insert 1, 2 or 3 as shown below. If you are unsure, please check further 
             descriptions of different types of warts at the end of this page. <br>
         
@@ -38,6 +41,18 @@
                 3 - Both common and plantar types<br>
 
          <input type = "text" name = "type" placeholder="insert 1, 2 or 3" required="required" /></p>
+         
+         -->
+         
+         
+         <select name="type" >
+          <option value="1">Common type</option>
+          <option value="2">Plantar type</option>
+          <option value="3">Both Common and Plantar types</option>
+        </select>
+         
+         
+         
          
          <p id="font22_bold">Approximate area of the largest wart (in square milimeters): <br>
          <input type ="text" name = "area" placeholder="values between 1 to 1000" required="required" /></p>
@@ -49,7 +64,7 @@
 
 <div id="box_left">
 
-      <h2> *Wart Types: </h2>
+      <h2> Wart Types: </h2>
       <ul>
           <li> <b>Common warts: </b>           
           This type of warts usually grow on your fingers and toes, but can 
@@ -58,7 +73,10 @@
           <br>		  
 		  <img title="Common wart" src="static/images/common_wart1.jpg" alt="Picture of common wart" style="width:300px;height:200px;">
           
-          <br>
+          <p style="font-size: 12px;"> 
+              Image source: http://medwarts.com
+          </p>
+          
           <br>
           
           <li> <b>Plantar warts: </b>           
@@ -68,19 +86,16 @@
           foot that is surrounded by hardened skin. Plantar warts can make walking uncomfortable. </li>
           <br>		  
 		  <img id="center" title="Plantar wart" src="static/images/plantar_wart1.jpg" alt="Picture of plantar wart" style="width:300px;height:150px;">
-		  
-      </ul>
+        	
+        	<p style="font-size: 12px;"> 
+        	  Image source: https://www.txfootankle.com  	    
+        	</p> 
+       </ul>
       
-            <p style="font-size: 12px;"> 
-              *Source: https://www.healthline.com/health/skin/warts
-        	  <br>
-        	  Common wart image: http://medwarts.com  
-        	  <br>
-        	  Plantar wart image: https://www.txfootankle.com
-        	    
-        	</p>
+
 
 </div>
+
 </body>
    
        {% endblock %}  

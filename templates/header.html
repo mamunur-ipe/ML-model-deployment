@@ -20,14 +20,19 @@
                   <div class="dropdown-content">
                       <a href="{{ url_for('input_breast_cancer') }}">Breast Cancer Early Detection Tool</a>
                       <a href="{{ url_for('input_wart') }}">Wart Treatment Decision Support Tool</a>
-                      <a href="{{ url_for('input_movie_recommender') }}">Movie Recommendation Tool</a>
+                      <a href="{{ url_for('input_movie_recommender') }}">Movie Recommendation Engine </a>
                   </div>
             </div>
+                <a href="{{ url_for('more_about_apps') }}"> More About Apps </a>
+                <a href="{{ url_for('about_me') }}"> About Me </a>
             
-            <a href="{{ url_for('upcoming_projects') }}"> Upcoming Apps </a>
-            <a href="{{ url_for('about_me') }}"> About Me </a>
-            <a href="https://github.com/mamunur-ipe" target="_blank"> GitHub </a>
-            <a href="https://www.linkedin.com/in/mamunur-rahman-9b5a7baa/" target="_blank"> LinkedIn </a>
+            <div class="dropdown">
+            <button class="dropbtn"> Connect </button>
+                  <div class="dropdown-content">
+                      <a href="https://www.linkedin.com/in/mamunur-rahman-9b5a7baa/" target="_blank"> My LinkedIn </a>
+                      <a href="https://github.com/mamunur-ipe" target="_blank"> My GitHub </a>
+                  </div>
+            </div>
             <br>
             <div id="font15"> Email: mdmamunur.rahman@mavs.uta.edu &nbsp; &nbsp; &nbsp; mamunur.ipe05@gmail.com</div>
 
@@ -35,10 +40,10 @@
       </div>
     </header>
     
+
 {% block content %}
 {% endblock %}
 
  </body>
 </html>
-
 

@@ -29,9 +29,9 @@ def input_movie_recommender():
    return render_template('input_movie_recommender.html')
 
 
-@app.route('/upcoming_projects')
-def upcoming_projects():
-   return render_template('upcoming_projects.html')
+@app.route('/more_about_apps')
+def more_about_apps():
+   return render_template('more_about_apps.html')
 
 @app.route('/about_me')
 def about_me():
@@ -205,21 +205,27 @@ def result_movie_recommender():
         # sort the list by weighted rank and show the first 5 movies
         result = df_top_10_by_type.sort_values(by=['weighted_rank'], ascending=False)['movie_title'][:n].tolist()
         return result
-       
+		
+              
     try:
-        recommendations = recommend_movie(original_user_input)
-        output_text = f"Since you liked {original_user_input}, our recommendations are: \n "
-
+        try:
+            recommendations = recommend_movie(original_user_input)
+            output_text = f"Since you liked {original_user_input}, our recommendations are: \n "
+			
+        except:
+            movie_list = pickle.load(open('movie_list.pkl','rb'))
+            close_match = difflib.get_close_matches(original_user_input, movie_list, n=1)[0]
+            user_input = close_match
+            idx = movie_list.index(user_input)
+            df_name_and_weighted_rank = pickle.load(open('df_name_and_weighted_rank_movie_recommender.pkl','rb'))
+            movie_title = df_name_and_weighted_rank.loc[idx, 'movie_title']
+            output_text = f"Did you mean- {movie_title.strip()}? \nIf yes, our recommendations are:\n"
+            recommendations = recommend_movie(close_match)
     
     except:
-        movie_list = pickle.load(open('movie_list.pkl','rb'))
-        close_match = difflib.get_close_matches(original_user_input, movie_list, n=1)[0]
-        user_input = close_match
-        idx = movie_list.index(user_input)
-        df_name_and_weighted_rank = pickle.load(open('df_name_and_weighted_rank_movie_recommender.pkl','rb'))
-        movie_title = df_name_and_weighted_rank.loc[idx, 'movie_title']
-        output_text = f"Did you mean- {movie_title.strip()}? \nIf yes, our recommendations are:\n"
-        recommendations = recommend_movie(close_match)
+        output_text = "Sorry!!! The movie is not in our database. Please try another movie or keyword."
+        recommendations = []
+
      
     return render_template("result_movie_recommender.html", result = output_text, recommended_movies = recommendations)
 
@@ -228,7 +234,6 @@ def result_movie_recommender():
 
 if __name__ == '__main__':
    app.run()
-
 
 
 

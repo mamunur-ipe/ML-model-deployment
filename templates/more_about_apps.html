@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+<title> More About Apps </title>
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static', filename='css/style.css') }}">
+
+<body>
+
+    <!-- Back to top -->
+    <a name="top"></a>
+
+        {% extends "header.html" %}
+        {% block content %}
+   
+
+<br>
+
+<div id="box_left">         
+
+      <h2> Wart Treatment Deciosn Support Tool </h2>
+      
+      To learn more about the development of this application, please check my below publications
+      
+      <ul>
+        
+            <li id="font16"> <em> Rahman, M. M., Zhou, Y., Wang, S., & Rogers, J. Wart Treatment Decision Support 
+            Using Support Vector Machines. International Journal of Intelligent Systems and 
+            Applications. (Accepted, In press)</em> </li>
+            
+                    
+            <li id="font16"> <em>Rahman, M. M., Wang, S., Zhou, Y., & Rogers, J. (2019). Predicting the Performance 
+            of Cryotherapy for Wart Treatment Using Machine Learning Algorithms. In IISE 
+            Annual Conference</em>. Orlando, FL: The Institute of Industrial and Systems Engineers.</li>
+       
+       </ul> 
+
+      <h2> Breast Cancer early Detection Tool </h2>
+      
+      To learn more about the development of this application, please check my below publication
+      
+      <ul>
+               
+            <li id="font16"> <em>Rahman, M. M., Ghasemi, Y., Suley, E., Zhou, Y., Wang, S., & Rogers, J. 
+            Machine Learning Based Computer Aided Diagnosis of Breast Cancer Utilizing 
+            Anthropometric and Clinical Features. (Under Review)</em> </li>
+       
+       </ul> 
+       
+       
+       <h2> Movie Recommendation Engine </h2>
+      
+              This is one of my practice projects. The developed recommendation engine is 
+              a hybrid system of content and popularity based filtering as 
+              per below steps:
+      
+      <ul>
+            <li>User will type a movie name s/he enjoyed</li>
+            <li>The recommendation engine will sort 10 movies based on content-based filtering (i.e., takes into consideration of movie genres, actors, directors, language and so on)</li>
+            <li>Weighted rank scores are calculated for the 10 movies based on below formula:</li>
+      </ul>
+      <div id="font15">
+            <p style="text-align: left; font-size: 18px; bottom:0px; line-height: 0;padding-left: 60px;">WR = (v &divide; (v+m)) &times; R + (m &divide; (v+m)) &times; C</p>
+            <p style="text-align: left; font-size: 18px; bottom:0px; padding-left: 60px;">&nbsp;where:</p>
+            <p style="text-align: left; font-size: 18px; bottom:0px; line-height: 0; padding-left: 90px;">WR = weighted rank score</p>
+            <p style="text-align: left; font-size: 18px; bottom:0px; line-height: 0; padding-left: 90px;">R = IMDB score</p>
+            <p style="text-align: left; font-size: 18px; bottom:0px; line-height: 0; padding-left: 90px;">v = number of users voted</p>
+            <p style="text-align: left; font-size: 18px; bottom:0px; line-height: 0; padding-left: 90px;">m = 25,000 (minimum number of votes required to be listed)</p>
+            <p style="text-align: left; font-size: 18px; bottom:0px; line-height: 0; padding-left: 90px;">C = the mean vote across the whole report (7.21 as per this dataset)</p>
+      </div>
+      <ul>
+            <li>Recommend the top five movies based on weighted rank scores</li>
+      </ul>
+      
+          To learn more about the development of this application, please click the below 
+          button to visit my related github repository.
+      <br>
+      <div id="center"> 
+      <a href="https://github.com/mamunur-ipe/movie_recommendation_engine/blob/master/movie_recommender.ipynb" target="_blank"> Github </a>
+      </div>
+      <br>
+
+</div>
+
+
+<br>
+
+
+<div id="box_left">
+   <h2> Upcoming App </h2>
+
+        <p> <b>Rice Leaf Disease Detection: </b>Farmers will take picture of a diseased rice leaf and upload the image in our 
+        system. Our trained Deep Convolutional Neural Network (Deep CNN) model will 
+        detect the disease type so that the farmers can take necessary steps quickly. </p>
+
+</div>
+
+<br>
+
+    <div style="text-align:center;"> 
+                
+        <a href="{{ url_for('home') }}"> Go Back to Home </a>
+        <a href="#top">Go Back to Top</a>
+     </div>
+
+<br>
+
+</body>
+
+    {% endblock %} 
+    
+</html>

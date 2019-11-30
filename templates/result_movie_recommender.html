@@ -1,31 +1,37 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-<title> Movie Recommender Input </title>
+<title> Movie Recommendations </title>
 <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static', filename='css/style.css') }}">
-</head>
+   
 <body>
 
     {% extends "header.html" %}
     {% block content %}
     
-    
-       <h4 id="box_center"> 
-           This App will recommend mainly English movies based on user input like Netflix or YouTube
-       </h4>
-      
-      <form  id="box_center" action="{{ url_for('result_movie_recommender') }}" method = "POST" >
-      
-      <h2 id="font25_bold"> Please type one of your favorite English movies released from 1930 to 2016 </h2>
-         
-         <input type = "text" name = "movie_name"  placeholder="full or partial name of your movie" required="required" /></p>
-         
+    <br>
 
-         <button type = "submit" class="btn btn:hover" > Submit </button>
-      </form>
-      
-</body>
+<div id="box_center">   
+ 
+   <p style="font-size: 20px;font-weight:bold;"> {{ result }} </p>
+           
+           {% for movie in recommended_movies %}
+
+                <h2>{{ movie }}</h2>
+
+
+           {% endfor %}
+</div>
    
+   
+<div style="font-size: 20px;font-weight:bold;text-align:center;">
+   <h4> Thank you for using this application!!! </h4>
+   
+    <a href="{{ url_for('input_movie_recommender') }}"> Try Again </a>
+   
+</div>
+
+</body>
+
    {% endblock %} 
    
 </html>

@@ -198,7 +198,7 @@ def result_movie_recommender():
         similarity_matrix = cosine_similarity(scaled_data, scaled_data[idx].reshape(1, -1))
         # get the index of the top 10 movies similar to user_input
         # the index 0 contains the user input movie. So, we start the index from 1
-        idx = list(np.argsort(-similarity_matrix.flatten())[1:10])
+        idx = list(np.argsort(-similarity_matrix.flatten())[1:12])
         # reload df_name_and_weighted_rank
         df_name_and_weighted_rank = pickle.load(open('df_name_and_weighted_rank_movie_recommender.pkl','rb'))  
         df_top_10_by_type = df_name_and_weighted_rank.loc[idx]

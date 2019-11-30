@@ -4,6 +4,10 @@
 from flask import Flask, render_template, request
 import pickle
 import numpy as np
+import pandas as pd
+import difflib
+from sklearn.metrics.pairwise import cosine_similarity
+
 
 app = Flask(__name__)
 
@@ -19,6 +23,10 @@ def input_wart():
 @app.route('/input_breast_cancer')
 def input_breast_cancer():
    return render_template('input_breast_cancer.html')
+
+@app.route('/input_movie_recommender')
+def input_movie_recommender():
+   return render_template('input_movie_recommender.html')
 
 
 @app.route('/upcoming_projects')
@@ -172,8 +180,55 @@ def result_breast_cancer():
 
 
 
+@app.route('/result_movie_recommender', methods = ['POST'])
+def result_movie_recommender():
+
+    original_user_input = request.form['movie_name']
+    
+    # define a function which will recommend best 'n' movies for a specific user
+    def recommend_movie(original_user_input, n=5):
+        user_input = original_user_input.strip()
+        user_input = user_input.lower().replace(' ', '').replace(':', '').replace('\'', '').replace('-', '')
+        # get index of the movie from the movie_list
+        movie_list = pickle.load(open('movie_list.pkl','rb'))
+        idx = movie_list.index(user_input)
+        # unpickle scaled data
+        scaled_data = pickle.load(open('scaled_data_movie_recommender.pkl','rb'))
+        # calculate cosine similarity for the user input movie
+        similarity_matrix = cosine_similarity(scaled_data, scaled_data[idx].reshape(1, -1))
+        # get the index of the top 10 movies similar to user_input
+        # the index 0 contains the user input movie. So, we start the index from 1
+        idx = list(np.argsort(-similarity_matrix.flatten())[1:10])
+        # reload df_name_and_weighted_rank
+        df_name_and_weighted_rank = pickle.load(open('df_name_and_weighted_rank_movie_recommender.pkl','rb'))  
+        df_top_10_by_type = df_name_and_weighted_rank.loc[idx]
+        # sort the list by weighted rank and show the first 5 movies
+        result = df_top_10_by_type.sort_values(by=['weighted_rank'], ascending=False)['movie_title'][:n].tolist()
+        return result
+       
+    try:
+        recommendations = recommend_movie(original_user_input)
+        output_text = f"Since you liked {original_user_input}, our recommendations are: \n "
+
+    
+    except:
+        movie_list = pickle.load(open('movie_list.pkl','rb'))
+        close_match = difflib.get_close_matches(original_user_input, movie_list, n=1)[0]
+        user_input = close_match
+        idx = movie_list.index(user_input)
+        df_name_and_weighted_rank = pickle.load(open('df_name_and_weighted_rank_movie_recommender.pkl','rb'))
+        movie_title = df_name_and_weighted_rank.loc[idx, 'movie_title']
+        output_text = f"Did you mean- {movie_title.strip()}? \nIf yes, our recommendations are:\n"
+        recommendations = recommend_movie(close_match)
+     
+    return render_template("result_movie_recommender.html", result = output_text, recommended_movies = recommendations)
+
+
+
+
 if __name__ == '__main__':
    app.run()
+
 
 
 

@@ -112,6 +112,7 @@ input[type=submit]:hover {
 
 #box_center {
     color: #E74C3C;
+    font-weight:bold;
     background-color: #EDFCE3;
     padding: 5px 20px;
     text-align:center;

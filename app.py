@@ -51,7 +51,7 @@ def result_wart():
         ## check the input values whether is it within the recommended range
         if age<15 or age>100 or time<0 or time>24 or area<1 or area>1000:
             output_text = "Please insert values within the recommended range, \
-                            otherwise the prediction would not be reliable"
+                            otherwise the prediction wouldn't be reliable"
         
             return render_template("input_error_wart.html", user_input = user_input, result = output_text)
         
@@ -128,7 +128,7 @@ def result_breast_cancer():
         ## check the input values whether it is within the recommended range
         if age<15 or age>100 or bmi<15 or bmi>40 or glucose<60 or glucose>250 or insulin<2 or insulin>60 or resistin<3 or resistin>80 or mcp_1<40 or mcp_1>1700:
             output_text = "Please insert values within the recommended range, \
-                            otherwise the prediction will not be reliable"
+                            otherwise the prediction wouldn't be reliable"
         
             return render_template("input_error_breast_cancer.html", user_input = user_input, result = output_text)
         
@@ -186,7 +186,7 @@ def result_movie_recommender():
     original_user_input = request.form['movie_name']
     
     # define a function which will recommend best 'n' movies for a specific user
-    def recommend_movie(original_user_input, n=5):
+    def recommend_movie(original_user_input, n=7):
         user_input = original_user_input.strip()
         user_input = user_input.lower().replace(' ', '').replace(':', '').replace('\'', '').replace('-', '')
         # get index of the movie from the movie_list
@@ -198,7 +198,7 @@ def result_movie_recommender():
         similarity_matrix = cosine_similarity(scaled_data, scaled_data[idx].reshape(1, -1))
         # get the index of the top 10 movies similar to user_input
         # the index 0 contains the user input movie. So, we start the index from 1
-        idx = list(np.argsort(-similarity_matrix.flatten())[1:12])
+        idx = list(np.argsort(-similarity_matrix.flatten())[1:15])
         # reload df_name_and_weighted_rank
         df_name_and_weighted_rank = pickle.load(open('df_name_and_weighted_rank_movie_recommender.pkl','rb'))  
         df_top_10_by_type = df_name_and_weighted_rank.loc[idx]
@@ -210,7 +210,7 @@ def result_movie_recommender():
     try:
         try:
             recommendations = recommend_movie(original_user_input)
-            output_text = f"Since you liked {original_user_input}, our recommendations are: \n "
+            output_text = f"Since {original_user_input} is your favorite, you might also like: \n "
 			
         except:
             movie_list = pickle.load(open('movie_list.pkl','rb'))

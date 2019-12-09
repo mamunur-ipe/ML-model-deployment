@@ -258,8 +258,11 @@ def process_sentence(sentence, dictionary):
         except:
             pass
         # lemmatize the word
-        lemmatizer = WordNetLemmatizer()
-        word = lemmatizer.lemmatize(word)
+	try:
+		lemmatizer = WordNetLemmatizer()
+        	word = lemmatizer.lemmatize(word)
+	except:
+		pass
         new_sentence = new_sentence + word + ' '
     return new_sentence.strip()  # remove leading and trailing space of the sentence    
 

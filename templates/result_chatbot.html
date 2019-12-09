@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title> AI ChatBot </title>
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+
+
+    {% extends "header.html" %}
+    {% block content %}
+    
+    <br>
+    
+       <div id="box_left" style="font-size: 18px;font-weight:bold;color:#E74C3C;"> 
+       Welcome!!!
+           <ul>
+               <li> You can chat with our chatbot and ask different questions </li>
+               <li> You can place order whenever you want </li>
+               <li> To end conversation, type 'quit', 'end', or 'stop' </li>
+           </ul>
+       </div>
+       
+       <br>
+       
+<div class="container">     
+      <form action="{{ url_for('result_chatbot') }}" method = "POST" >
+      
+           {% for sentence in result %}
+           
+
+               <div class="{{ loop.cycle('odd', 'even') }}">{{ sentence}} </div>
+               
+            
+           {% endfor %}
+
+
+</div>
+
+         {% if not show_order_page %}
+
+             <input type = "text" name = "user_input"  placeholder="  type here..." required="required" />
+             
+             <br>
+             
+             <button type = "submit" class="btn btn:hover" > Send </button>
+         
+         {% endif %}
+         
+         
+         
+         {% if show_order_page %}
+
+                      <p id="font22_bold">Select pizza size
+                     <br>                             
+                         <select name="pizza_size" >
+                          <option value="1">Small (12 inch)</option>
+                          <option value="2">Medium (14 inch)</option>
+                          <option value="3">Large (16 inch)</option>
+                        </select>
+                    </p>
+                    
+                    <p id="font22_bold">Select cheese
+                     <br>                             
+                         <select name="cheese" >
+                          <option value="1">No cheese</option>
+                          <option value="2">Mozzarella </option>
+                          <option value="3">Cheddar</option>
+                          <option value="4">Permesan</option>
+                          <option value="5">Provolone</option>
+                          <option value="6">Feta</option>
+                        </select>
+                    </p>
+                    
+                    <p id="font22_bold">Which toppings do you want? pepperoni, chicken, beef, mushroom, tomato, onion, spinach, olive"  <br>
+                     <input type ="text" name = "topping" placeholder="type here..." required="required" /></p>
+                    
+            <button type = "submit" class="btn btn:hover" > Send </button>
+         
+         {% endif %}             
+         
+         
+      </form>
+
+      
+</body>
+   
+   {% endblock %} 
+   
+</html>

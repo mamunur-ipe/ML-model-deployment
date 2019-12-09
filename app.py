@@ -297,28 +297,28 @@ def result_chatbot():
             random_response = random.choice(chatbot_response)
             return random_response, intent
     
-#    try:
-    user_input = request.form['user_input']
-    response.append(f"You: {user_input}")
-    # by default, place_order is set as False
-    place_order = False
-    # if customer want to place order, take him to order page
-    if generate_response(user_input)[1] == "place_order":
-        place_order = True
+    try:
+        user_input = request.form['user_input']
+        response.append(f"You: {user_input}")
+        # by default, place_order is set as False
+        place_order = False
+        # if customer want to place order, take him to order page
+        if generate_response(user_input)[1] == "place_order":
+            place_order = True
+        
+        # At the beginning, in reply to customers name, bot will generate the below response
+        if response[-2] == 'Komola: Welcome!! What name should I call you??':
+            response.append("Komola: Okay, Thanks!!!")
+        else:    
+            response.append(f"Komola: {generate_response(user_input)[0]}")
     
-    # At the beginning, in reply to customers name, bot will generate the below response
-    if response[-2] == 'Komola: Welcome!! What name should I call you??':
-        response.append("Komola: Okay, Thanks!!!")
-    else:    
-        response.append(f"Komola: {generate_response(user_input)[0]}")
-
-    return render_template("result_chatbot.html", result = response, show_order_page = place_order)
+        return render_template("result_chatbot.html", result = response, show_order_page = place_order)
     
-#    except: # when the user submit the place order button, this section is executed
-#        response.append("Our system is processing your order..................")
-#        response.append(f"Komola: Great!!! Your order has been placed. Your order ID is {random.randint(100, 999)}. Is there anything else I can help you with? ")
-#        
-#        return render_template("result_chatbot.html", result = response, show_order_page = False)
+    except: # when the user submit the place order button, this section is executed
+        response.append("Our system is processing your order..................")
+        response.append(f"Komola: Great!!! Your order has been placed. Your order ID is {random.randint(100, 999)}. Is there anything else I can help you with? ")
+        
+        return render_template("result_chatbot.html", result = response, show_order_page = False)
         
 
 

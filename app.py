@@ -7,6 +7,9 @@ import numpy as np
 import pandas as pd
 import difflib
 from sklearn.metrics.pairwise import cosine_similarity
+import random
+from nltk.stem import WordNetLemmatizer
+import base64
 
 
 app = Flask(__name__)
@@ -27,6 +30,14 @@ def input_breast_cancer():
 @app.route('/input_movie_recommender')
 def input_movie_recommender():
    return render_template('input_movie_recommender.html')
+
+
+@app.route('/input_chatbot')
+def input_chatbot():
+    #  clear the chat history of previous user
+    global response
+    response= ['Komola: Welcome!! What name should I call you??']
+    return render_template('input_chatbot.html', result = response)
 
 
 @app.route('/more_about_apps')
@@ -230,6 +241,82 @@ def result_movie_recommender():
     return render_template("result_movie_recommender.html", result = output_text, recommended_movies = recommendations)
 
 
+## ChatBot
+    
+# unpickle the necessary data and variables
+with open("data_chatbot.pickle", "rb") as f:
+    remove_punct_dict, remove_word_dict, scaled_data_chatbot, df_user_input, df_response, vectorizer = pickle.load(f)
+# clean and preprocess the target column of the dataframe
+def process_sentence(sentence, dictionary):
+    #remove punctuations
+    sentence = sentence.translate(remove_punct_dict)
+    new_sentence = ''
+    for word in sentence.split():
+        try:
+            # replace word if it is in remove_word_dict
+            word = dictionary[word]
+        except:
+            pass
+        # lemmatize the word
+        lemmatizer = WordNetLemmatizer()
+        word = lemmatizer.lemmatize(word)
+        new_sentence = new_sentence + word + ' '
+    return new_sentence.strip()  # remove leading and trailing space of the sentence    
+
+
+
+
+
+response= []
+
+@app.route('/result_chatbot', methods = ['POST'])
+def result_chatbot():
+      
+    def generate_response(original_user_input):
+
+        processed_user_input= []
+        processed_user_input.append(process_sentence(original_user_input, remove_word_dict))
+        user_input_count_vectorizer = vectorizer.transform(processed_user_input).toarray()
+        # calculate cosine similarity for the user input movie
+        similarity_matrix = cosine_similarity(scaled_data_chatbot, user_input_count_vectorizer)
+        
+        # find the maximum value of the similarity matrix
+        max_value = max(similarity_matrix.flatten())
+        if max_value < 0.2:
+            return ["I apolozize!! I don't understand.", "dont_understand"]
+        else:
+            # get the index of the maximum cosine_similarity
+            idx = np.argsort(similarity_matrix.flatten())[-1]
+            # get the 'intent' from the df_user_input dataframe
+            intent = df_user_input.loc[idx, 'intent']
+            # get a random response
+            chatbot_response = df_response['chatbot_response'][df_response['intent']==intent].tolist()
+            random_response = random.choice(chatbot_response)
+            return random_response, intent
+    
+    try:
+        user_input = request.form['user_input']
+        response.append(f"You: {user_input}")
+        # by default, place_order is set as False
+        place_order = False
+        # if customer want to place order, take him to order page
+        if generate_response(user_input)[1] == "place_order":
+            place_order = True
+        
+        # At the beginning, in reply to customers name, bot will generate the below response
+        if response[-2] == 'Komola: Welcome!! What name should I call you??':
+            response.append("Komola: Okay, Thanks!!!")
+        else:    
+            response.append(f"Komola: {generate_response(user_input)[0]}")
+    
+        return render_template("result_chatbot.html", result = response, show_order_page = place_order)
+    
+    except: # when the user submit the place order button, this section is executed
+        response.append("Our system is processing your order..................")
+        response.append(f"Komola: Great!!! Your order has been placed. Your order ID is {random.randint(100, 999)}. Is there anything else I can help you with? ")
+        
+        return render_template("result_chatbot.html", result = response, show_order_page = False)
+        
 
 
 if __name__ == '__main__':

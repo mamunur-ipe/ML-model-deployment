@@ -267,3 +267,18 @@ ul ul ul {
     list-style-type: circle;
     color: black;
 }
+
+.container {
+  height: 200px;
+  overflow: scroll;
+  display: flex;
+  flex-direction: column-reverse;
+  background-color: #D5DBDB;
+  padding: 5px 30px;
+  border-radius: 0px;
+  column-count: 1;
+  text-align: left;
+}
+
+.odd{color: red;}
+.even{color: blue;}

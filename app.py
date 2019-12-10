@@ -10,9 +10,14 @@ from sklearn.metrics.pairwise import cosine_similarity
 import random
 from nltk.stem import WordNetLemmatizer
 import base64
+import datetime
+from datetime import timedelta
+import nltk
 
 
 app = Flask(__name__)
+
+nltk.data.path.append('./nltk_data/')
 
 
 @app.route('/')
@@ -31,15 +36,6 @@ def input_breast_cancer():
 def input_movie_recommender():
    return render_template('input_movie_recommender.html')
 
-
-@app.route('/input_chatbot')
-def input_chatbot():
-    #  clear the chat history of previous user
-    global response
-    response= ['Komola: Welcome!! What name should I call you??']
-    return render_template('input_chatbot.html', result = response)
-
-
 @app.route('/more_about_apps')
 def more_about_apps():
    return render_template('more_about_apps.html')
@@ -49,7 +45,7 @@ def about_me():
    return render_template('about_me.html')
 
 
-
+#-------------------------------------------------------------------------------------------------------
 @app.route('/result_wart', methods = ['POST'])
 def result_wart():
     try:
@@ -123,7 +119,7 @@ def result_wart():
         return render_template("input_error_wart.html", user_input = user_input, result = output_text)
                 
 
-
+#---------------------------------------------------------------------------------------------------
 @app.route('/result_breast_cancer', methods = ['POST'])
 def result_breast_cancer():
     
@@ -189,7 +185,7 @@ def result_breast_cancer():
         return render_template("input_error_breast_cancer.html", user_input = user_input, result = output_text)
     
 
-
+#----------------------------------------------------------------------------------------------------
 
 @app.route('/result_movie_recommender', methods = ['POST'])
 def result_movie_recommender():
@@ -240,7 +236,7 @@ def result_movie_recommender():
      
     return render_template("result_movie_recommender.html", result = output_text, recommended_movies = recommendations)
 
-
+#------------------------------------------------------------------------------------------------------
 ## ChatBot
     
 # unpickle the necessary data and variables
@@ -252,13 +248,16 @@ def process_sentence(sentence, dictionary):
     sentence = sentence.translate(remove_punct_dict)
     new_sentence = ''
     for word in sentence.split():
+        # make the letters lowercase
+        word = word.lower()
         try:
-            # replace word if it is in remove_word_dict
+            # replace word if it is in remove_word_dict, do it twice
+            word = dictionary[word]
             word = dictionary[word]
         except:
             pass
         # lemmatize the word
-        try:
+        try: #In Heroku, if nltk package is not not properly installed
             lemmatizer = WordNetLemmatizer()
             word = lemmatizer.lemmatize(word)
         except:
@@ -266,61 +265,131 @@ def process_sentence(sentence, dictionary):
         new_sentence = new_sentence + word + ' '
     return new_sentence.strip()  # remove leading and trailing space of the sentence    
 
+# define response where chat history data will be stored for all the users
+response= {}
+
+# email the chat history in every 24 hours
+from send_email import send_email
+# define  a function which will process a dictionary to line by line sentence
+def format_chat_history(history_dict):
+    message = ""
+    for key in list(history_dict.keys()):
+        message = message + key + '\n'
+        for sentence in history_dict[key]:
+            message = message + sentence + '\n'
+    return message
+
+last_email_time = datetime.datetime(2019,12,9,22,0)
+time_difference = datetime.datetime.now() - last_email_time
+time_difference_in_minutes = time_difference / timedelta(minutes=1)
+if time_difference_in_minutes >= 24*60:   
+    # send email
+    subject = "ChatBot communications"
+    email_body = format_chat_history(response)
+    try:
+        send_email(subject, email_body, base64.b64decode('c3Ryb25nMTIzQA==').decode("utf-8"))
+        last_email_time = datetime.datetime.now()
+    except:
+        pass
 
 
 
+@app.route('/input_chatbot')
+def input_chatbot():
+    
+    user_key = request.remote_addr
+    global response
+    response[user_key]= ['Komola: Welcome!! What name should I call you??']
+    return render_template('input_chatbot.html', result = response[user_key])
 
-response= []
+# define a function which will keep the last 'n' elements of a dictionary, remove rest of the keys
+def keep_n_key_in_dict(x, n):
+    while len(x) > n:
+        x.pop(list(x.keys())[0])
+
+# keep 20 user chat history in response dictionary
+keep_n_key_in_dict(response, 20)
+
 
 @app.route('/result_chatbot', methods = ['POST'])
 def result_chatbot():
-      
-    def generate_response(original_user_input):
+    
+    # get the user IP address
+    user_key = request.remote_addr
+    if request.form['user_input'] not in ['quit', 'stop', 'exit', 'end']:      
+        def generate_response(original_user_input):
+    
+            processed_user_input= []
+            processed_user_input.append(process_sentence(original_user_input, remove_word_dict))
+            user_input_count_vectorizer = vectorizer.transform(processed_user_input).toarray()
+            # calculate cosine similarity for the user input movie
+            similarity_matrix = cosine_similarity(scaled_data_chatbot, user_input_count_vectorizer)
+            
+            # find the maximum value of the similarity matrix
+            max_value = max(similarity_matrix.flatten())
+            if max_value < 0.2:
+                return ["I apolozize!! I don't understand.", "dont_understand"]
+            else:
+                # get the index of the maximum cosine_similarity
+                idx = np.argsort(similarity_matrix.flatten())[-1]
+                # get the 'intent' from the df_user_input dataframe
+                intent = df_user_input.loc[idx, 'intent']
+                # get a random response
+                chatbot_response = df_response['chatbot_response'][df_response['intent']==intent].tolist()
+                random_response = random.choice(chatbot_response)
+                return random_response, intent
+        
+        if request.form['user_input'] not in ['small_pizza', 'medium_pizza', 'large_pizza']:
+            user_input = request.form['user_input']
+            response[user_key].append(f"You: {user_input}")
+            # by default, place_order is set as False
+            place_order = False
+            # if customer want to place order, take him to order page
+            if generate_response(user_input)[1] == "place_order":
+                place_order = True
+            
+            # At the beginning, in reply to customers name, bot will generate the below response
+            if response[user_key][-2] == 'Komola: Welcome!! What name should I call you??':
+                response[user_key].append("Komola: Okay, Thanks!!!")
+            else:    
+                response[user_key].append(f"Komola: {generate_response(user_input)[0]}")
+        
+            return render_template("result_chatbot.html", result = response[user_key], show_order_page = place_order)
+    
+        
+        else: # when the user submit the place order button, this section is executed
+            response[user_key].append("Our system is processing your order..................")
+            response[user_key].append(f"Komola: Great!!! Your order has been placed. Your order ID is {random.randint(100, 999)}. Is there anything else I can help you with? ")
+            
+            return render_template("result_chatbot.html", result = response[user_key], show_order_page = False)
+    
+    else: # if the user quit the chat
+        # email the chat history and render the homepage
 
-        processed_user_input= []
-        processed_user_input.append(process_sentence(original_user_input, remove_word_dict))
-        user_input_count_vectorizer = vectorizer.transform(processed_user_input).toarray()
-        # calculate cosine similarity for the user input movie
-        similarity_matrix = cosine_similarity(scaled_data_chatbot, user_input_count_vectorizer)
+        # define  a function which will process a dictionary to line by line sentence
+        def format_chat_history(history_dict):
+            message = ""
+            for key in list(history_dict.keys()):
+                message = message + key + '\n'
+                for sentence in history_dict[key]:
+                    message = message + sentence + '\n'
+            return message
+
+        subject = "ChatBot communications"
+        email_body = format_chat_history(response)
+        try:
+            send_email(subject, email_body, base64.b64decode('c3Ryb25nMTIzQA==').decode("utf-8"))
+        except:
+            pass
         
-        # find the maximum value of the similarity matrix
-        max_value = max(similarity_matrix.flatten())
-        if max_value < 0.2:
-            return ["I apolozize!! I don't understand.", "dont_understand"]
-        else:
-            # get the index of the maximum cosine_similarity
-            idx = np.argsort(similarity_matrix.flatten())[-1]
-            # get the 'intent' from the df_user_input dataframe
-            intent = df_user_input.loc[idx, 'intent']
-            # get a random response
-            chatbot_response = df_response['chatbot_response'][df_response['intent']==intent].tolist()
-            random_response = random.choice(chatbot_response)
-            return random_response, intent
+        return render_template("home.html")
     
-    try:
-        user_input = request.form['user_input']
-        response.append(f"You: {user_input}")
-        # by default, place_order is set as False
-        place_order = False
-        # if customer want to place order, take him to order page
-        if generate_response(user_input)[1] == "place_order":
-            place_order = True
         
-        # At the beginning, in reply to customers name, bot will generate the below response
-        if response[-2] == 'Komola: Welcome!! What name should I call you??':
-            response.append("Komola: Okay, Thanks!!!")
-        else:    
-            response.append(f"Komola: {generate_response(user_input)[0]}")
-    
-        return render_template("result_chatbot.html", result = response, show_order_page = place_order)
-    
-    except: # when the user submit the place order button, this section is executed
-        response.append("Our system is processing your order..................")
-        response.append(f"Komola: Great!!! Your order has been placed. Your order ID is {random.randint(100, 999)}. Is there anything else I can help you with? ")
-        
-        return render_template("result_chatbot.html", result = response, show_order_page = False)
         
 
 
 if __name__ == '__main__':
-   app.run(debug = True)
+   app.run()
+   
+
+

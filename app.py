@@ -12,12 +12,10 @@ from nltk.stem import WordNetLemmatizer
 import base64
 import datetime
 from datetime import timedelta
-import nltk
 
 
 app = Flask(__name__)
 
-nltk.data.path.append('./nltk_data/')
 
 
 @app.route('/')
